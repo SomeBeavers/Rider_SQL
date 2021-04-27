@@ -57,18 +57,7 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Queries\Mix.cs" />
-    <Compile Include="Queries\UseAsync.cs" />
-    <Compile Include="Queries\UseCollectionReferenceLoad.cs" />
-    <Compile Include="Queries\UseComplexType.cs" />
-    <Compile Include="Queries\UseEnumeration.cs" />
-    <Compile Include="Queries\UseInclude.cs" />
-    <Compile Include="Queries\UseIncludeWithSelect.cs" />
-    <Compile Include="Queries\UseLocalData.cs" />
-    <Compile Include="Queries\UseNotMapped.cs" />
-    <Compile Include="Queries\UseNoTracking.cs" />
     <Compile Include="Queries\UseRawSql.cs" />
-    <Compile Include="Queries\UseReferenceLoad.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

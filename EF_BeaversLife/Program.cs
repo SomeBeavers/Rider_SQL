@@ -36,43 +36,8 @@ namespace EF_BeaversLife
 
         private static void ExecuteQueries()
         {
-            //new UseSplitQuery().UseSplitQuery1();
-            //new UseSplitQuery().UseSplitQuery2();
-
-            //new UseTVF().UseTVF1();
-
-            //new UseMapToQuery().MapToQuery1();
-            //new UseMix().PrintTest();
-            //new UseMix().PrintTest2();
-            // new UseMix().PrintTest3();
-            //new UseMix().PrintTest4();
-            //new UseMix().OneToOne();
-
-            //new UseInclude().UseFilteredInclude1();
-            //new UseInclude().UseFilteredInclude2();
-            //new UseInclude().UseStringInInclude1();
-            //new UseInclude().UseStringInInclude2();
-
-            //new UseAsEnumerable().UseAsEnumerable1();
-            //new UseAsEnumerable().UseAsEnumerable2();
-
-            //new UseRawSql().UseRawSql1();
-            //new UseRawSql().UseRawSql2("Pizza");
-
-            //new UseInverseProperty().UseInverseProperty1();
-
-            //new UseEnumeration().DbCallDueToToArray();
-            //new UseEnumeration().DbCallDueToToDictionary();
-
-            //new UseEnumeration().DbCallDueToToList2();
-            //new UseEnumeration().DbCallDueToToList3();
-
-            //new UseRawSql().UseRawSql1();
-            //new UseInclude().UseIncludeMultilevel();
-
-            //new Issues().RSRP_481722();
-
-            new UseProjection().UseProjection2();
+            new UseRawSql().UseRawSql1();
+            new UseRawSql().UseRawSql2("Pizza");
         }
 
         private static async Task ExecuteQueriesAsync()

@@ -30,44 +30,10 @@ namespace EF_BeaversLife_Framework
 
         private static void ExecuteQueries()
         {
-            //new UseReferenceLoad().UseReferenceLoad1();
-            //new UseNotMapped().UseNotMapped1();
-            //new Mix().UseCustomIdName();
-            //new UseComplexType().UseComplexType1();
-            //new Mix().UseInverseProperties();
-            //new UseIncludeWithSelect().UseIncludeWithSelect1();
-            //new UseInclude().UseDbQueryIncludeWithStringPath();
-            //new UseInclude().UseExtensionInclude1();
-
-            //new UseEnumeration().DbCallDueToToArray();
-            //new UseEnumeration().DbCallDueToToDictionary();
-            //new UseEnumeration().DbCallDueToToList();
-            //new UseEnumeration().DbCallDueToToList2();
-            //new UseEnumeration().DbCallDueToToList3();
-            //new UseEnumeration().DbCallDueToFirst();
-            //new UseEnumeration().DbCallDueToAny();
-            //new UseEnumeration().DbCallDueToLoad();
-            //new UseEnumeration().DbCallDueToReload();
-            //new UseLocalData().UseLocalData1();
-            //new UseLocalData().UseLocalData2();
-            //new Mix().UseFind3();
-
-            //new UseLocalData().UseLocalData3();
-            //new UseEnumeration().DbCallDueToLoad2();
-            //new UseNoTracking().UseNoTracking1();
-
-            //new UseIncludeWithSelect().UseIncludeMultilevel();
-            new UseCollectionReferenceLoad().UseCollectionWithFiltersLoad();
         }
 
         private static async Task ExecuteQueriesAsync()
         {
-            //var useAsync = new UseAsync();
-            //await useAsync.UseAsync1();
-            //await useAsync.UseAsync2();
-            //await useAsync.UseAsync3();
-
-            await new UseInclude().UseStringIncludeWithWhere1();
         }
 
         private static void SeedDb()
