@@ -1,4 +1,5 @@
-﻿--  Sample employee database 
+﻿--  D:\DB\test_db-master
+--  Sample employee database 
 --  See changelog table for details
 --  Copyright (C) 2007,2008, MySQL AB
 --  

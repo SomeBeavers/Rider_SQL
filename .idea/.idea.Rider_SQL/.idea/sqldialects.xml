@@ -7,6 +7,7 @@
     <file url="file://$PROJECT_DIR$/EF_BeaversLife_Framework" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/FrameworkLib_Common" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/MSSQL_App" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/MSSQL_Dapper_App" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/MultiApp" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/MySql_App" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/Oracle_App" dialect="Oracle" />

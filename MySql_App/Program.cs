@@ -12,7 +12,15 @@ namespace MySql_App
             using var con = new MySqlConnection(cs);
             con.Open();
 
-            Console.WriteLine($"MySQL version : {con.ServerVersion}");
+            string    sql = "SELECT * FROM departments where dept_name=\"Sales\"";
+            using var cmd = new MySqlCommand(sql, con);
+
+            using MySqlDataReader rdr = cmd.ExecuteReader();
+
+            while (rdr.Read())
+            {
+                Console.WriteLine("{0} {1} ", rdr.GetValue(0), rdr.GetValue(1));
+            }
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿--------------------------------------------------------------------------------------
+﻿-- D:\DB\oracle-sample-database
+
+--------------------------------------------------------------------------------------
 -- Name	       : OT (Oracle Tutorial) Sample Database
 -- Link	       : http://www.oracletutorial.com/oracle-sample-database/
 -- Version     : 1.0
