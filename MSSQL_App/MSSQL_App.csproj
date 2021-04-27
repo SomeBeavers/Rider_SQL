@@ -9,8 +9,4 @@
       <PackageReference Include="Microsoft.Data.SqlClient" Version="2.1.1" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Queries" />
-    </ItemGroup>
-
 </Project>

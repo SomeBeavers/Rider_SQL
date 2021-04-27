@@ -68,6 +68,49 @@ public async void $Test$()&#xD;
 &#xD;
 	Console.ForegroundColor = ConsoleColor.White;&#xD;
 }</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A209A7600F518B4B80D023DF7159DEBF/@KeyIndexDefined">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A209A7600F518B4B80D023DF7159DEBF/Applicability/=Live/@EntryIndexedValue">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A209A7600F518B4B80D023DF7159DEBF/Description/@EntryValue">Create simple ef method</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A209A7600F518B4B80D023DF7159DEBF/Field/=Test/@KeyIndexDefined">True</s:Boolean>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A209A7600F518B4B80D023DF7159DEBF/Field/=Test/Order/@EntryValue">0</s:Int64>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A209A7600F518B4B80D023DF7159DEBF/Reformat/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A209A7600F518B4B80D023DF7159DEBF/Scope/=C3001E7C0DA78E4487072B7E050D86C5/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A209A7600F518B4B80D023DF7159DEBF/Scope/=C3001E7C0DA78E4487072B7E050D86C5/CustomProperties/=minimumLanguageVersion/@EntryIndexedValue">8.0</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A209A7600F518B4B80D023DF7159DEBF/Scope/=C3001E7C0DA78E4487072B7E050D86C5/Type/@EntryValue">InCSharpFile</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A209A7600F518B4B80D023DF7159DEBF/Shortcut/@EntryValue">mssql_method</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A209A7600F518B4B80D023DF7159DEBF/ShortenQualifiedReferences/@EntryValue">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A209A7600F518B4B80D023DF7159DEBF/Text/@EntryValue">/// &lt;summary&gt;&#xD;
+/// &#xD;
+/// &lt;/summary&gt;&#xD;
+public void $Test$()&#xD;
+{&#xD;
+    using SqlConnection connection = new SqlConnection(Constants.ConnectionString);&#xD;
+&#xD;
+    SqlCommand          command;&#xD;
+    string              sql;&#xD;
+    string              output = "";&#xD;
+&#xD;
+    sql = "$END$";&#xD;
+&#xD;
+    command = new SqlCommand(sql, connection);&#xD;
+&#xD;
+    connection.Open();&#xD;
+    using SqlDataReader reader = command.ExecuteReader();&#xD;
+&#xD;
+    if (reader.HasRows)&#xD;
+    {&#xD;
+        while (reader.Read())&#xD;
+        {&#xD;
+            Console.WriteLine("{0}", reader[0]);&#xD;
+        }&#xD;
+    }&#xD;
+    else&#xD;
+    {&#xD;
+        Console.WriteLine("No rows found.");&#xD;
+    }&#xD;
+&#xD;
+    reader.Close();&#xD;
+}</s:String>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=CD32E9DA4C285647BD3711C31F3047A8/@KeyIndexDefined">True</s:Boolean>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=CD32E9DA4C285647BD3711C31F3047A8/Applicability/=Live/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=CD32E9DA4C285647BD3711C31F3047A8/Reformat/@EntryValue">True</s:Boolean>
