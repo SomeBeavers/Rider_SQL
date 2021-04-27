@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SqlDialectMappings">
+    <file url="file://$PROJECT_DIR$/CoreLib_Common" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/CoteMultiLib" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/EF_BeaversLife" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/EF_BeaversLife_Framework" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/FrameworkLib_Common" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/MultiApp" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/VBLib_Common" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/VB_App" dialect="TSQL" />
+  </component>
+</project>

@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MSSQL_EF_Core_MultiApp", "M
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MSSQL_EF", "MSSQL_EF", "{6C0DC637-F477-4A98-A1B1-6799F01CE441}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MSSQL_No_ORM", "MSSQL_No_ORM", "{2F7AE032-F372-4414-AD5B-523BD658E109}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
