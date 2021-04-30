@@ -77,13 +77,20 @@ namespace EF_BeaversLife
             var queryString = "select * from Food where Title = @parameter";
             // var foods4 = context.Food.FromSqlRaw(queryString, pizza4)
             //                     .Include(food => food.Animal);
-
+            
             string longQuery1 = "select j.Salary, j.Title as JobTitle, dr.Title as DrawbackTitle, dr.Consequence_Name from Jobs j"+
             "inner join JobDrawbacks jd"+
             "on j.Id = jd.JobId"+
             "inner join Drawbacks dr"+
             "on jd.DrawbackId = dr.Id"+
             "order by j.Salary";
+            string concatenation   = "select Id, Title from Drawbacks where Title = " + "Test";
+            string test            = "Test";
+            string interpolaction  = $"select Id, Title from Drawbacks where Title = {test}";
+            string verbatimString  = @"select Id, Title from Drawbacks where Title = " + "Test";
+            string withPlaceholder = @"select Id, Title from Drawbacks where Title = {0}";
+            string withPlaceholder2 = string.Format("select Id, Title from Drawbacks where Title = '{0}'", 1);
+            string withPlaceholder3 = string.Format("select Id, Title from Drawbacks where Title = {0}", 1);
         }
 
         private static async Task ExecuteQueriesAsync()

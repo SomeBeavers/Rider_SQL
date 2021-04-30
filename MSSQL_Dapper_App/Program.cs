@@ -22,12 +22,11 @@ namespace MSSQL_Dapper_App
 
         private static void TestQuery(IDbConnection db)
         {
-            var              parameter2 = new { title = "Messenger", salary = 1 };
-            IEnumerable<Job> jobs2      = db.Query<Job>("select * from Jobs where Title = @title and Salary >= @salary", parameter2);
-
-            foreach (var job in jobs2)
+            var enumerable = 
+                db.Query("select * from Jobs where Salary = {=salary}", new { salary =10 });
+            foreach (var i in enumerable)
             {
-                Console.WriteLine(job.Title);
+                Console.WriteLine(i);
             }
         }
 
@@ -56,6 +55,11 @@ namespace MSSQL_Dapper_App
                                                                      "inner join Drawbacks dr"      +
                                                                      "on jd.DrawbackId = dr.Id"     +
                                                                      "order by j.Salary");
+            
+            db.Query<int>(
+                "select * from (select 1 as Id union all select 2 union all select 3) as X where Id in @Ids"
+                , new { Ids = new int[] { 1, 2, 3 } });
+            db.Query("select * from Jobs where Salary = {=salary}", new { salary=10 });
         }
     }
 

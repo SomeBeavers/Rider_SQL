@@ -13,6 +13,8 @@ namespace MySql_App
             con.Open();
 
             string    sql = "SELECT * FROM departments where dept_name=\"Sales\"";
+            
+            string    sql2 = @"SELECT * FROM departments where dept_name=""Sales""";
             using var cmd = new MySqlCommand(sql, con);
 
             using MySqlDataReader rdr = cmd.ExecuteReader();
