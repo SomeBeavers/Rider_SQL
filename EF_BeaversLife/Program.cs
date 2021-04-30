@@ -8,7 +8,7 @@ using System.Net;
 using System.Threading.Tasks;
 using CoreLib_Common;
 using CoreLib_Common.Model;
-using EF_BeaversLife.Queries;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 #endregion
@@ -21,7 +21,7 @@ namespace EF_BeaversLife
     {
         private static async Task Main()
         {
-            SeedDb();
+            // SeedDb();
 
             Console.ForegroundColor = ConsoleColor.Green;
             ExecuteQueries();
@@ -36,8 +36,54 @@ namespace EF_BeaversLife
 
         private static void ExecuteQueries()
         {
-            new UseRawSql().UseRawSql1();
-            new UseRawSql().UseRawSql2("Pizza");
+            using var context = new AnimalContext();
+
+            // replace start
+            string pizza = "Pizza";
+            var foods2 = context.Food.FromSqlInterpolated($"select * from Food where Title = {pizza}")
+                                .Include(food => food.Animal);
+            
+            // replace end
+
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            // replace start
+            foreach (var food in foods2)
+            {
+                Console.WriteLine(food);
+            }
+            // replace end
+
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+
+        private static void AllQueries()
+        {
+            using var context = new AnimalContext();
+            var foods = context.Food.FromSqlRaw("select * from Food where Title = {0}", "Pizza")
+                               .Include(food => food.Animal);
+
+            string pizza = "Pizza";
+            var foods2 = context.Food.FromSqlInterpolated($"select * from Food where Title = {pizza}")
+                                .Include(food => food.Animal);
+
+            var pizza2 = new SqlParameter("parameter", "Pizza");
+            var foods3 = context.Food.FromSqlRaw("select * from Food where Title = @parameter", pizza2)
+                                .Include(food => food.Animal);
+
+            var title = new SqlParameter("trees", "'TreesWorshipers'");
+            var clubs = context.Clubs.FromSqlRaw("exec SelectClubsByTitle @Title=@trees", title).AsEnumerable();
+            
+            var pizza4                            = new SqlParameter("parameter", "Pizza");
+            var queryString = "select * from Food where Title = @parameter";
+            // var foods4 = context.Food.FromSqlRaw(queryString, pizza4)
+            //                     .Include(food => food.Animal);
+
+            string longQuery1 = "select j.Salary, j.Title as JobTitle, dr.Title as DrawbackTitle, dr.Consequence_Name from Jobs j"+
+            "inner join JobDrawbacks jd"+
+            "on j.Id = jd.JobId"+
+            "inner join Drawbacks dr"+
+            "on jd.DrawbackId = dr.Id"+
+            "order by j.Salary";
         }
 
         private static async Task ExecuteQueriesAsync()

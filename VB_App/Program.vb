@@ -6,7 +6,7 @@ Imports VBLib_Common.Model
 
 Module Program
     Sub Main(args As String())
-        SeedDb()
+'        SeedDb()
         Console.ForegroundColor = ConsoleColor.Green
         ExecuteQueries()
         Console.ForegroundColor = ConsoleColor.White

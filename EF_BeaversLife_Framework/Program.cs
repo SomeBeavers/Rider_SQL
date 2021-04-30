@@ -16,7 +16,7 @@ namespace EF_BeaversLife_Framework
     {
         private static async Task Main()
         {
-            SeedDb();
+            // SeedDb();
 
             Console.ForegroundColor = ConsoleColor.Green;
             // ReSharper disable once MethodHasAsyncOverload

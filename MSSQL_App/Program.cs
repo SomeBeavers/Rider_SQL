@@ -13,7 +13,8 @@ namespace MSSQL_App
 
         private static void ExecuteQueries()
         {
-            new Select().Select1();
+            //new Select().Select1();
+            new Select().SelectWithParameters();
         }
     }
 }

@@ -21,7 +21,7 @@ namespace EF_BeaversLife
     {
         private static async Task Main()
         {
-            SeedDb();
+            // SeedDb();
 
             Console.ForegroundColor = ConsoleColor.Green;
             ExecuteQueries();
