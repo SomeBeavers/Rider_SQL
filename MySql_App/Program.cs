@@ -12,17 +12,35 @@ namespace MySql_App
             using var con = new MySqlConnection(cs);
             con.Open();
 
-            string    sql = "SELECT * FROM departments where dept_name=\"Sales\"";
-            
-            string    sql2 = @"SELECT * FROM departments where dept_name=""Sales""";
-            using var cmd = new MySqlCommand(sql, con);
+            ExecuteQueries(con);
+        }
 
-            using MySqlDataReader rdr = cmd.ExecuteReader();
+        private static void ExecuteQueries(MySqlConnection con)
+        {
+            string    sql3 = "SELECT first_name, gender FROM employees where gender=@gender";
+            using var cmd3 = new MySqlCommand(sql3, con);
+
+            cmd3.Parameters.AddWithValue("@gender", 'F');
+            cmd3.Prepare();
+
+            using MySqlDataReader rdr = cmd3.ExecuteReader();
 
             while (rdr.Read())
             {
                 Console.WriteLine("{0} {1} ", rdr.GetValue(0), rdr.GetValue(1));
             }
+        }
+        
+        private static void AllQueries(MySqlConnection con)
+        {
+            string sql  = "SELECT * FROM departments where dept_name=\"Sales\"";
+            string sql2 = @"SELECT * FROM departments where dept_name=""Sales""";
+
+            string    sql3 = "SELECT first_name, gender FROM employees where gender=@gender";
+            using var cmd3  = new MySqlCommand(sql3, con);
+
+            cmd3.Parameters.AddWithValue("@gender", 'F');
+            cmd3.Prepare();
         }
     }
 }

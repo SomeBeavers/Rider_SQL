@@ -133,6 +133,59 @@ namespace MSSQL_App
             connection.Open();
             command5.ExecuteNonQuery();
             Console.WriteLine(Convert.ToInt32(command5.Parameters["@AllSalary"].Value));
+
+            string sql6 =
+                "select a.Name, g.TheGrade from Grades g" +
+                "left join Animals a"                     +
+                "on g.AnimalId = a.Id"                    +
+                "where g.TheGrade > @MinGrade";
+            SqlCommand cmd6  = new SqlCommand(sql, connection);
+            cmd6.Parameters.Add("@MinGrade", SqlDbType.Decimal);
+            cmd6.Parameters["@MinGrade"].Value = 4.5;
+
+            string     sql7 = "insert into Jobs (Title, Salary) Values (@Title, @Salary)";
+            SqlCommand cmd7  = new SqlCommand(sql, connection);
+            
+            
+        }
+        
+        public static SqlDataAdapter CreateSqlDataAdapter(SqlConnection connection)
+        {
+            // Assumes that connection is a valid SqlConnection object
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            adapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+
+            // Create the commands.
+            adapter.SelectCommand = new SqlCommand(
+                "SELECT Title, Salary FROM Jobs", connection);
+            adapter.InsertCommand = new SqlCommand(
+                "INSERT INTO Jobs (Title, Salary) " +
+                "VALUES (@Title, @Salary)", connection);
+            adapter.UpdateCommand = new SqlCommand(
+                "UPDATE Jobs SET Title = @Title, Salary = @Salary " +
+                "WHERE Title = @oldTitle", connection);
+            adapter.DeleteCommand = new SqlCommand(
+                "DELETE FROM Jobs WHERE Title = @Title", connection);
+
+            // Create the parameters.
+            adapter.InsertCommand.Parameters.Add("@Title",
+                SqlDbType.VarChar, 40, "Title");
+            adapter.InsertCommand.Parameters.Add("@Salary",
+                SqlDbType.VarChar, 40, "Salary");
+
+            adapter.UpdateCommand.Parameters.Add("@Title",
+                SqlDbType.VarChar, 40, "Title");
+            adapter.UpdateCommand.Parameters.Add("@Salary",
+                SqlDbType.VarChar, 40, "Salary");
+            adapter.UpdateCommand.Parameters.Add("@oldTitle",
+                    SqlDbType.VarChar, 40, "Title").SourceVersion =
+                DataRowVersion.Original;
+
+            adapter.DeleteCommand.Parameters.Add("@Title",
+                    SqlDbType.Char, 5, "Title").SourceVersion =
+                DataRowVersion.Original;
+
+            return adapter;
         }
     }
 }
