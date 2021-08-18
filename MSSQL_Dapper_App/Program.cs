@@ -49,11 +49,11 @@ namespace MSSQL_Dapper_App
             
             // BUG: " are not inserted when Enter in long string
             var jobWithDrawbacksSplitted = db.Query<JobWithDrawback>("select j.Salary, j.Title as JobTitle, dr.Title as DrawbackTitle, dr.Consequence_Name from Jobs j " 
-                                                                     + "inner join JobDrawbacks jd" +
-                                                                     "on j.Id = jd.JobId"           +
-                                                                     "inner join Drawbacks dr"      +
-                                                                     "on jd.DrawbackId = dr.Id"     +
-                                                                     "order by j.Salary");
+                                                                     + " inner join JobDrawbacks jd" +
+                                                                     " on j.Id = jd.JobId"           +
+                                                                     " inner join Drawbacks dr"      +
+                                                                     " on jd.DrawbackId = dr.Id"     +
+                                                                     " order by j.Salary");
             
             // List Support
             db.Query<int>(
