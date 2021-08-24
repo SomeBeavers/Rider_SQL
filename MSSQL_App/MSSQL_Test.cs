@@ -116,6 +116,12 @@ namespace MSSQL_App
                         id;
 
             var sql17 = "select id from " + parameterTitle + " where id > 1";
+            var initUserSql = " INSERT INTO dbo.\"Animals\" " +
+                              " (\"Name\", Age " +
+                              ")"+
+                              " VALUES " +
+                              $" ('{id.ToString()}', " +
+                              $" (SELECT id FROM Jobs where id = '{id.ToString()}'))";
         }
 
         private void StringFormat()
@@ -144,6 +150,7 @@ namespace MSSQL_App
                                       "inner join Animals A on f.AnimalId = A.Id " +
                                       "where f.Id<>{0} "                           +
                                       "and f.Title Like {1}", id, "'B%'");
+
         }
 
         private void StringInterpolation(string parameterTitle)
@@ -157,10 +164,57 @@ where Id=
       {id}
       and Title like {"'%a'"}";
             var sql4 = "select Name from Animals where" + $" id={GetId()}";
+            var sql5 = $@"select J.Title from Jobs J 
+inner join JobDrawbacks JD on J.Id = JD.JobId
+inner join Drawbacks D on D.Id = JD.DrawbackId
+where J.Id = {id} 
+and D.Title like {parameterTitle}
+order by J.Title";
+            var sql6 = $"select * from Clubs " +
+                       $"where id = {id}";
+            var sql7 = $@"select j.Title from " + $"(select * from Jobs) j";
+            var sql8 = $@"
+select j.Title from
+(
+    select id, title from Jobs
+    where Title like '{parameterTitle}'
+    ) j";
+            var sql9 = $"select * from "             +
+                        $"(select * from Animals) a " +
+                        $"where a.Id={id}"                ;
+            var sql10 = $@"insert into Jobs
+(Title, Salary) 
+values 
+       ('{parameterTitle}', {id + 100}),
+       ('{ConstString}', 1)";
+
+            var sql11 = $@"insert into Drawbacks
+(Title, Consequence_Name) 
+select Name, Name 
+from Animals
+where id = {id}
+and Name like '{id}'";
         }
 
         private void Verbatim(string parameterTitle)
         {
+            int id = 1;
+            var sql1 = @$"select distinct Age from Animals
+where id = {id} or
+Name like '{parameterTitle.ToUpper()}' or
+LovedById is not null or
+Name like '{parameterTitle}'";
+            var sql2 = @"
+select
+""id"" as Id,
+""ClubId"" as Club_id
+from dbo.Grades
+where TheGrade >=" + id;
+            var sql3 = $@"select * from Animals where Name like '{nameof(parameterTitle)}'";
+            var sql4 = @$"Update dbo.""Drawbacks"" set ""Title"" = '{parameterTitle}' 
+where id = {id}";
+            const string sql = @" SELECT distinct name FROM ""Animals"" ";
+            string sql11 = @$" SELECT distinct name FROM ""Animals"" ";
         }
 
         private void Escape()
@@ -198,6 +252,38 @@ where Id=
             cmd6.Parameters["@MinGrade"].Value = 4.5;
         }
 
+        private void WithDeclaredVariable(string stringParameter)
+        {
+            var sql1 = @"select * from Animals
+declare 
+@name varchar(max)
+SET @name1 = 'Some%'; 
+select * from Animals where Name like @name1";
+            var sql2 = @$"select * from Animals
+declare 
+@name varchar(max)
+SET @name1 = '{stringParameter}'; 
+select * from Animals where Name like @name1";
+        }
+
+        private void WithTSqlFunction()
+        {
+            var sql1 = @"
+select * from Animals
+DECLARE Animals_Cursor CURSOR FOR  
+SELECT Id  
+FROM Animals;  
+OPEN Animals_Cursor;  
+FETCH NEXT FROM Animals_Cursor;  
+WHILE @@FETCH_STATUS = 0  
+   BEGIN  
+      FETCH NEXT FROM Animals_Cursor;  
+   END;  
+CLOSE Animals_Cursor;  
+DEALLOCATE Animals_Cursor;  
+GO ";
+        }
+
         #region Helpers
 
         private static string GetTableName()
@@ -209,12 +295,37 @@ where Id=
         {
             return 1;
         }
+        
+        private void Test4(string column1, string column2)
+        {
+            string likeness = "%l%";
+            var sql1 = $@"
+select {column1}, {column2} from 
+(select J.title {column1}, d.title as {column2} from Jobs J
+inner join JobDrawbacks JD on J.Id = JD.JobId
+inner join Drawbacks D on D.Id = JD.DrawbackId
+where J.Title like '{likeness}')
+j1
+";
+            // var s = "(select * from Jobs J inner join JobDrawbacks JD on J.Id = JD.JobId inner join Drawbacks D on D.Id = JD.DrawbackId where J.Title like '{likeness})'";
+        }
 
         public static void Smoke_ExecuteQueries()
         {
             // replace SQl
-            var columnName = "id";
-            var sql        = $"select \"{columnName}\" from Animals";
+            var    column1  = "title";
+            var    column2  = "drawback";
+            var    windy    = "Windy";
+            string likeness = "%l%";
+            var sql = $"select {column1}, {column2} from "                          +
+                      $"(select J.title {column1}, d.title as {column2} from Jobs J " +
+                      $"inner join JobDrawbacks JD on J.Id = JD.JobId "               +
+                      $"inner join Drawbacks D on D.Id = JD.DrawbackId "              +
+                      $"where J.Title like '{likeness}') "                            +
+                      $"j1 "                                                          +
+                      $"where {column2} = '{windy.ToString()}' "                      +
+                      $"and {column1} = '{likeness}' "                                +
+                      $"";
 
             using var connection = new SqlConnection(Constants.ConnectionString);
 
@@ -241,7 +352,7 @@ where Id=
             {
                 while (reader.Read())
                 {
-                    Console.WriteLine("{0}", reader[0]);
+                    Console.WriteLine("{0} {1}", reader[0], reader[1]);
                 }
             }
             else
@@ -253,5 +364,13 @@ where Id=
         }
 
         #endregion
+    }
+    
+    public static class MyExt
+    {
+        public static int GetMyId(this string id)
+        {
+            return Convert.ToInt32(id);
+        }
     }
 }

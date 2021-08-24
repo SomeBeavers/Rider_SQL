@@ -32,6 +32,10 @@ namespace MSSQL_Dapper_App
         private static void AllQueries(IDbConnection db)
         {
             var result = db.Query<int>("SELECT COUNT(*) from Animals").Single();
+
+            var sql3 = string.Format(@"select J.Title from Jobs J
+            inner join JobDrawbacks JD on J.Id = JD.JobId
+            where JD.JobId = @id and J.Id<=@id and J.Title like '{0}'", "");
             
             var result2 = db.Query<int>("select Id from Beavers where Fluffiness = @P1",
                 new { P1 = 1 });

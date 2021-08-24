@@ -178,6 +178,118 @@ drop table #tempPK ";
             Console.WriteLine(Convert.ToInt32(command5.Parameters["@AllSalary"].Value));
         }
 
+        private void Test4(string column1,  string column2)
+        {
+	        string likeness = "%l%";
+	        var sql1 = $@"
+select {column1}, {column2} from 
+(select J.title {column1}, d.title as {column2} from Jobs J
+inner join JobDrawbacks JD on J.Id = JD.JobId
+inner join Drawbacks D on D.Id = JD.DrawbackId
+where J.Title like '{likeness}')
+j1
+";
+	        // var s = "(select * from Jobs J inner join JobDrawbacks JD on J.Id = JD.JobId inner join Drawbacks D on D.Id = JD.DrawbackId where J.Title like '{likeness})'";
+        }
+
+        private void Test5()
+        {
+	        var    column1  = "title";
+	        var    column2  = "drawback";
+	        var    windy    = "Windy";
+	        string likeness = "%l%";
+	        var sql = $"select {column1}, {column2} from "                            +
+	                  $"(select J.title {column1}, d.title as {column2} from Jobs J " +
+	                  $"inner join JobDrawbacks JD on J.Id = JD.JobId "               +
+	                  $"inner join Drawbacks D on D.Id = JD.DrawbackId "              +
+	                  $"where J.Title like '{likeness}') "                            +
+	                  $"j1 "                                                          +
+	                  $"where {column2} = '{windy.ToString()}' "                      +
+	                  $"and {column1} = '{likeness}' "                                +
+	                  $"";
+        }
+
+        private void Test6()
+        {
+	        string sql = "select * from Animals a "+
+	                     " inner join Grades G on a.Id = G.AnimalId "
+	                     +" where G.TheGrade>{0} "+
+	                     " and G.TheGrade <={1}";
+	        var format = string.Format(sql, 3, 5);
+
+	        var s = $@"
+select * from Animals a 
+inner join Grades G on a.Id = G.AnimalId
+where G.TheGrade>{new InnerClass().GetGrade(3,5)}
+and G.TheGrade <= {new InnerClass().GetGrade(5,5)}
+	        ";
+        }
+
+        private void Test7()
+        {
+	        string sql = @" select * from Animals
+GO
+
+CREATE PROCEDURE dbo.CreateBackup @fullBackup bit, @pathToBackup varchar(max)
+AS
+
+DECLARE @fullPath varchar(max)
+SET @fullPath = @pathToBackup+'\full_backupDB_'+convert(varchar(25), CONVERT(VARCHAR(10),GETDATE(),10), 120)+'.bak'
+
+DECLARE @differentialPath varchar(max)
+SET @differentialPath = @pathToBackup+'\differential_backupDB_'+convert(varchar(25), CONVERT(VARCHAR(10),GETDATE(),10), 120) +'.bak'
+
+DECLARE @Current_Database varchar(max)
+DECLARE @Current_Path varchar(max)
+
+DECLARE @dbname nvarchar(128)
+SET @dbname = N'BackupInfoDB'
+
+BEGIN
+SET @Current_Database = (SELECT DB_NAME())
+
+IF @fullBackup = 1
+	SET @Current_Path = @fullPath
+ELSE 
+	SET @Current_Path = @differentialPath
+
+BACKUP DATABASE @Current_Database
+TO
+DISK = @Current_Path
+WITH INIT;
+
+IF NOT(EXISTS (SELECT name 
+FROM master.dbo.sysdatabases
+WHERE ('[' + name + ']' = @dbname 
+OR name = @dbname)))
+BEGIN
+CREATE DATABASE BackupInfoDB
+END
+EXEC ('USE [BackupInfoDB]; IF NOT(EXISTS (SELECT * 
+                 FROM BackupInfoDB.INFORMATION_SCHEMA.TABLES 
+                 WHERE TABLE_SCHEMA = ''dbo'' 
+                 AND  TABLE_NAME = N''BackupInfo''))
+BEGIN
+CREATE TABLE [BackupInfoDB].[dbo].[BackupInfo](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[BackupDate] [varchar](25) NOT NULL,
+	[Path] [varchar](max) NOT NULL,
+	[dbName] [varchar](max) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+END')
+
+
+EXEC ('USE BackupInfoDB; INSERT INTO BackupInfo (BackupDate,Path,dbName)
+VALUES (convert(varchar(25), CONVERT(VARCHAR(10),GETDATE(),10), 120),'''+@pathToBackup+''', '''+@Current_Database+''')')
+
+END
+GO";
+        }
+
         public static SqlDataAdapter CreateSqlDataAdapter(SqlConnection connection)
         {
             // Assumes that connection is a valid SqlConnection object
@@ -216,5 +328,21 @@ drop table #tempPK ";
 
             return adapter;
         }
+    }
+
+    internal class InnerClass
+    {
+	    public int GetGrade(int minGrade, int maxGrade)
+	    {
+		    return (minGrade + maxGrade) / 2;
+	    }
+    }
+
+    public static class Ext
+    {
+	    public static int GetId(this string id)
+	    {
+		    return Convert.ToInt32(id);
+	    }
     }
 }
