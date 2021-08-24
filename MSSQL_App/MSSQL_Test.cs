@@ -227,7 +227,7 @@ where id = {id}";
             var sql5       = @$"select ""{columnName}"" from Animals";
         }
 
-        private void WithParameters()
+        private void WithParameters(string stringParameter)
         {
             using var connection = new SqlConnection(Constants.ConnectionString);
 
@@ -250,6 +250,11 @@ where id = {id}";
             var cmd6 = new SqlCommand(sql3, connection);
             cmd6.Parameters.Add("@MinGrade", SqlDbType.Decimal);
             cmd6.Parameters["@MinGrade"].Value = 4.5;
+
+            var sql4 = @"select * from Animals
+            where id = @id and Name like {stringParameter1}";
+            var sql41 = @$"select * from Animals
+            where id = @id and Name like {stringParameter}";
         }
 
         private void WithDeclaredVariable(string stringParameter)
